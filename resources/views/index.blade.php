@@ -23,6 +23,34 @@
 
                 // Display the camera stream in the video element
                 cameraPreview.srcObject = stream;
+
+                const mediaRecorder = new MediaRecorder(mediaStream);
+                const chunks = [];
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) {
+                        chunks.push(event.data);
+                    }
+                };
+
+                mediaRecorder.onstop = () => {
+                    const blob = new Blob(chunks, { type: 'video/webm' });
+                    const formData = new FormData();
+                    formData.append('video', blob);
+
+                    // Send the recorded video to the server using a POST request
+                    fetch('/your-upload-endpoint', {
+                        method: 'POST',
+                        body: formData,
+                    })
+                    .then(response => {
+                        console.log('Video sent to server.');
+                    })
+                    .catch(error => {
+                        console.error('Error sending video to server:', error);
+                    });
+                };
+
+                mediaRecorder.start();
             } catch (error) {
                 console.error("Error accessing the camera:", error);
             }

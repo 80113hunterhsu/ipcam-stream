@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\VideoFrameController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
+Route::get('/recv', function () {
+    return view('recv');
+});
+Route::get('/send', function () {
+    return view('send');
+});
+
+Route::post('/stream', [VideoFrameController::class, 'receiveFrame']);
+Route::get('/stream', [VideoFrameController::class, 'getFrame']);
+Route::get('/streamdata', [VideoFrameController::class, 'index']);
