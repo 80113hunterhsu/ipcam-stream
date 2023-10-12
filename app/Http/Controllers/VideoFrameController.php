@@ -37,7 +37,7 @@ class VideoFrameController extends Controller
         // In this example, we'll serve frames from a storage path, but you can customize this logic
         // $path = storage_path('app/public/frames/frame.jpg'); // Adjust the path as needed
         // $fileContents = file_get_contents($path);
-        $data = base64_encode($this->data[0]);
+        $data = base64_encode($this->parseJSON()[0]);
         $fileContents = $data;
 
         return response($fileContents, 200)->header('Content-Type', 'image/jpeg');

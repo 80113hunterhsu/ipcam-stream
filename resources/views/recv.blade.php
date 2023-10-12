@@ -18,9 +18,9 @@
                 console.log(data);
                 // data = JSON.parse(data);
                 // return data.blob();
-                videoStream.src = data;
+                videoStream.src = btoa(data);
                 videoStream.onload = async () => {
-                    // requestAnimationFrame(displayVideo); // Continue displaying frames
+                    requestAnimationFrame(displayVideo); // Continue displaying frames
                     // await sleep(1000);
                 };
             })
