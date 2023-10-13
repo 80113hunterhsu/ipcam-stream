@@ -14,33 +14,15 @@
 </head>
 <body>
     <!-- <h1>Camera Preview</h1> -->
-    <video id="camera-preview" autoplay style="display: none;"></video>
+    <video id="camera-preview" autoplay muted playsinline playsInline style="display: none;"></video>
     <select id="camera-select">
         <option value="0" selected disabled>請選擇相機</option>
     </select>
 
     <script>
         const cameraPreview = document.getElementById("camera-preview");
-
-        // Start the camera when the page is loaded
-        async function startCamera() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: {
-                        width: { min: 1280, ideal: 1920, max: 2560 },
-                        height: { min: 720, ideal: 1080, max: 1440 },
-                        facingMode: { exact: 'environment' }
-                    }
-                });
-                // console.log(stream);
-
-                // Display the camera stream in the video element
-                cameraPreview.srcObject = stream;
-            } catch (error) {
-                console.error("Error accessing the camera:", error);
-            }
-        }
         var selector = document.getElementById("camera-select");
+
         async function getCameras() {
             var cameras = await navigator.mediaDevices.enumerateDevices();
             var html = '';
@@ -52,6 +34,7 @@
             });
             document.getElementById("camera-select").innerHTML += html;
         }
+        
         selector.addEventListener('change', async (event) => {
             const stream = await navigator.mediaDevices.getUserMedia({ 
                 video: {
